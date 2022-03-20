@@ -1,0 +1,26 @@
+name: Publish & Package
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: NPM Install
+        run: npm install
+      - name: Package extension
+        uses: lannonbr/vsce-action@master
+        with:
+          args: "package -o ado-pipeline-vscode-${{ github.event.release.tag_name }}.vsix"
+      - name: Upload extension package to release
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./ado-pipeline-vscode-${{ github.event.release.tag_name }}.vsix
+          asset_name: ado-pipeline-vscode-${{ github.event.release.tag_name }}.vsix
+          asset_content_type: application/octet-stream
