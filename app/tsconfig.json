@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "module": "ES2020",
+      "allowSyntheticDefaultImports": true,
+      "moduleResolution": "node",
+      "target": "ES2020",
+      "jsx": "react",
+      "sourceMap": true,
+      "experimentalDecorators": true,
+      "lib": ["dom", "ES2015"],
+      // "strict": true,
+      "alwaysStrict": true,
+    },
+  }
