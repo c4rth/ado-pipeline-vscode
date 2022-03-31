@@ -26,8 +26,7 @@
   "activationEvents": [
     "onCommand:ado-pipeline-vscode.viewPipeline"
   ],
-	"main": "./out/extension.js",
-	"browser": "./out/extension.js",
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
@@ -38,7 +37,7 @@
     "menus": {
       "explorer/context": [
         {
-          "when": "resourceLangId == azure-pipelines",
+          "when": "resourceExtname == .yml",
           "command": "ado-pipeline-vscode.viewPipeline",
           "group": "AzDoExtension"
         }
@@ -46,42 +45,50 @@
     }
   },
   "scripts": {
+    "build": "npm run clean && npm run compile && webpack --mode production && npm pack",
     "vscode:prepublish": "npm-run-all vscepack:*",
-    "compile": "npm-run-all compile:*",
-    "compile:extension": "tsc -p ./",
-    "compile:view": "webpack",
+    "compile": "tsc -p .",
     "vscepack:extension": "tsc -p ./",
     "vscepack:view": "webpack --mode production --devtool hidden-source-map",
     "watch": "npm-run-all -p watch:*",
     "watch:extension": "tsc -watch -p ./",
     "watch:view": "webpack --watch",
-    "pretest": "npm run compile && npm run lint",
     "lint": "eslint src app --ext ts,tsx",
-    "test": "npm run compile && node ./out/test/runTest.js"
+    "test": "mocha --require ts-node/register --ui bdd ./tests/*.test.ts",
+    "test_old": "npm run compile && node ./out/test/runTest.js",
+    "testYaml_old": "npm run compile:extension && node ./tests/testYaml.js"
   },
   "devDependencies": {
     "@types/get-value": "^3.0.2",
     "@types/glob": "^7.1.4",
-    "@types/node": "^17.0.21",
+    "@types/js-yaml": "^4.0.5",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^17.0.23",
     "@types/react": "^17.0.40",
     "@types/react-dom": "^17.0.13",
-    "@types/vscode": "^1.62.0",
-    "@typescript-eslint/eslint-plugin": "^5.14.0",
-    "@typescript-eslint/parser": "^5.14.0",
-    "@vscode/test-web": "^0.0.22",
+    "@types/vscode": "^1.66.0",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "@vscode/test-web": "^0.0.24",
+    "azure-pipelines-language-server": "^0.6.7",
     "css-loader": "^6.7.1",
-    "eslint": "^8.11.0",
+    "eslint": "^8.12.0",
     "glob": "^7.2.0",
+    "mocha": "^9.2.2",
+    "mocha-junit-reporter": "^2.0.0",
     "npm-run-all": "^4.1.5",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.8",
-    "typescript": "^4.6.2",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@fluentui/react": "^8.62.0",
+    "@fluentui/react": "^8.63.0",
     "@fluentui/react-hooks": "^8.5.3",
+    "ajv": "^8.11.0",
+    "js-yaml": "^4.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }

@@ -1,0 +1,104 @@
+# File: azure-pipelines.yml
+
+parameters:
+  - name: platform
+    type: string
+    default: linux
+    values:
+      - linux
+      - windows
+  - name: paramTest
+    type: boolean
+    default: 'true'
+  - name: myMultiString
+    type: string
+    default: default
+    values:
+    - default
+    - ubuntu
+  - name: myNumber
+    type: number
+    default: 2
+    values:
+    - 1
+    - 2
+    - 4
+    - 8
+    - 16
+  - name: myBoolean
+    type: boolean
+    default: true
+  - name: myObject
+    type: object
+    default:
+      foo: FOO
+      bar: BAR
+      things:
+      - one
+      - two
+      - three
+      nested:
+        one: apple
+        two: pear
+        count: 3
+  - name: myStep
+    type: step
+    default:
+      script: echo my step
+  - name: mySteplist
+    type: stepList
+    default:
+      - script: echo step one
+      - script: echo step two
+
+variables:
+  - name: dummyVar
+    value: abcdefg
+  - template: templates/include-vars.yml
+
+resources:
+  pipelines:
+  - pipeline: SmartHotel-resource # identifier for the resource (used in pipeline resource variables)
+    source: SmartHotel-CI # name of the pipeline that produces an artifact
+
+trigger: none
+
+stages:
+- stage: Stage1
+  jobs:
+  - job: Linux
+    pool:
+      vmImage: 'ubuntu-latest'
+    condition: ${{ eq(parameters.platform, 'linux') }}
+    steps:
+    - checkout: self
+    - template: templates/include-npm-steps.yml  # Template reference
+    - script: echo Test1
+  - job: Windows
+    pool:
+      vmImage: 'windows-latest'
+    condition: ${{ eq(parameters.platform, 'windows') }}
+    steps:
+    - template: templates/include-npm-steps.yml  # Template reference
+    - script: echo Test2
+- stage: Stage2
+  jobs:
+  - job: TestJob2_1
+    steps:
+      - script: echo 'Hello'
+      - script: echo $(dummyVar)
+- stage: Stage3
+  condition: ${{ eq(parameters.paramTest, 'true') }}
+  jobs:
+  - job: TestJob3_1
+    steps:
+      - script: echo 'Hello'
+      - script: echo $(dummyVar)
+- stage: Stage4
+  condition: ${{ eq(parameters.paramTest, 'true') }}
+  jobs:
+  - job: stepList
+    steps: ${{ parameters.mySteplist }}
+  - job: myStep
+    steps:
+      - ${{ parameters.myStep }}

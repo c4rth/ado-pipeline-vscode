@@ -1,0 +1,5 @@
+variables:
+  - name: test1
+    value: 'Variable test 1'
+  - name: test2
+    value: 'Variable test 2'
