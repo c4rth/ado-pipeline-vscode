@@ -57,7 +57,7 @@ describe("YAML Tests", () => {
         const schema = getSchema();
         validator.addSchema(schema, schema["$id"]);
 
-        const pipeline = getPipeline('azure-pipeline.yml');
+        const pipeline = getPipeline('azure-pipeline-test.yml');
         console.log(JSON.stringify(pipeline));
 
         var validate;
