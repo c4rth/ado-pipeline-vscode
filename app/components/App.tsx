@@ -13,7 +13,7 @@ export const App: React.FC = (): JSX.Element => {
       <ThemeProvider theme={ThemeHelpers.getAdaptedTheme()}>
         <div className="App">
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
-            <Label styles={titleStyle}>YAML is valid</Label>
+            <Label styles={titleStyle}>YAML is loaded</Label>
           </Stack>
           <div className="InputsPanel">
                 <Label>soon</Label>
@@ -27,7 +27,7 @@ export const App: React.FC = (): JSX.Element => {
       <ThemeProvider theme={ThemeHelpers.getAdaptedTheme()}>
         <div className="AppError">
           <Stack horizontal verticalAlign="center">
-            <Label styles={titleErrorStyle}>YAML is invalid</Label>
+            <Label styles={titleErrorStyle}>YAML is invalid ?</Label>
           </Stack>
           {(e as TypeError).message}
         </div>

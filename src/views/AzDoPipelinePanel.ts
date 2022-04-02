@@ -7,12 +7,12 @@ export class AzDoPipelinePanel {
     private readonly _panel: vscode.WebviewPanel;
     private _disposables: vscode.Disposable[] = [];
     private readonly _extensionPath: string;
-    private readonly _fileUri: vscode.Uri;
+    //private readonly _fileUri: vscode.Uri;
 
     private constructor(panel: vscode.WebviewPanel, fileUri: vscode.Uri, extensionPath: string) {
         this._panel = panel;
         this._extensionPath = extensionPath;
-        this._fileUri = fileUri;
+        //this._fileUri = fileUri;
 
         this._renderWebview();
 
@@ -27,7 +27,7 @@ export class AzDoPipelinePanel {
 
     public static render(fileUri: vscode.Uri, extensionPath: string) {
         vscode.workspace.openTextDocument(fileUri).then((document) => {
-            const json = document.getText();
+            //const yaml = document.getText();
             if (AzDoPipelinePanel.currentPanel) {
                 AzDoPipelinePanel.currentPanel._renderWebview();
                 AzDoPipelinePanel.currentPanel._panel.reveal(ViewColumn.One);
