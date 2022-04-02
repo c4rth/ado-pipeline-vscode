@@ -54,7 +54,7 @@
     "watch:extension": "tsc -watch -p ./",
     "watch:view": "webpack --watch",
     "lint": "eslint src app --ext ts,tsx",
-    "test": "mocha --require ts-node/register --ui bdd ./tests/*.test.ts",
+    "tests": "mocha --require ts-node/register --timeout 10000 ./tests/*.test.ts",
     "test_old": "npm run compile && node ./out/test/runTest.js",
     "testYaml_old": "npm run compile:extension && node ./tests/testYaml.js"
   },
@@ -89,6 +89,7 @@
     "@fluentui/react-hooks": "^8.5.3",
     "ajv": "^8.11.0",
     "js-yaml": "^4.1.0",
+    "jsonschema": "^1.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }

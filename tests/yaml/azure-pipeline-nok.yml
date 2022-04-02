@@ -1,10 +1,10 @@
 # File: azure-pipelines.yml
 
-parameters:
-  - name: platform
-    type: string
-    default: linux
-    values:
+parametersXXX:
+  - nameXXX: platform
+    typeXXX: string
+    defaultXXX: linux
+    valuesXXX:
       - linux
       - windows
   - name: paramTest
@@ -64,7 +64,7 @@ resources:
 trigger: none
 
 stages:
-- stage: Stage0
+- stage: Stage1
   jobs:
   - job: Linux
     pool:
@@ -81,20 +81,20 @@ stages:
     steps:
     - template: templates/include-npm-steps.yml  # Template reference
     - script: echo Test2
-- stage: Stage1
+- stage: Stage2
   jobs:
   - job: TestJob2_1
     steps:
       - script: echo 'Hello'
       - script: echo $(dummyVar)
-- stage: Stage2
+- stage: Stage3
   condition: ${{ eq(parameters.paramTest, 'true') }}
   jobs:
   - job: TestJob3_1
     steps:
       - script: echo 'Hello'
       - script: echo $(dummyVar)
-- stage: Stage3
+- stage: Stage4
   condition: ${{ eq(parameters.paramTest, 'true') }}
   jobs:
   - job: stepList
