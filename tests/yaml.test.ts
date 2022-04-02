@@ -4,7 +4,6 @@ import * as fs from 'fs';
 import * as util from "util";
 import { strict as assert } from 'assert';
 import * as jsyaml from 'js-yaml';
-import { Validator } from "jsonschema";
 import Ajv from "ajv";
 
 
@@ -77,42 +76,6 @@ describe("YAML Tests", () => {
             console.log(validator.errorsText(validator.errors));
         }
         assert.equal(true, validate);
-    });
-
-    it.skip('jsonschema - Validate parsed YAML OK', () => {
-        const schema = getSchema();
-        const validator = new Validator();
-        //validator.addSchema(schema);
-
-        const pipeline = getPipeline('azure-pipeline-test.yml');
-
-        var validations = validator.validate(pipeline, schema);
-
-        if (validations.valid) {
-            console.log("OK");
-            console.log(pipeline);
-        } else {
-            console.log(validations.errors);
-        }
-        assert.equal(true, validations.valid);
-    });
-
-
-    it.skip('jsonschema - Validate parsed YAML NOK', () => {
-        const schema = getSchema();
-        const validator = new Validator();
-
-        const pipeline = getPipeline('azure-pipeline-nok.yml');
-        //console.log(util.inspect(data, false, 10, true));
-
-        var validations = validator.validate(pipeline, schema);
-
-        if (validations.valid) {
-            console.log("OK");
-            console.log(pipeline);
-        } else {
-            console.log(validations.errors);
-        }
     });
 
 });
